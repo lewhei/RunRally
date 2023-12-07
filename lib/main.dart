@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() => runApp(const RunRallyApp());
 
@@ -101,15 +102,31 @@ class FeedScreen extends StatelessWidget {
   }
 }
 
-class MapScreen extends StatelessWidget {
+class MapScreen extends StatefulWidget {
   const MapScreen({Key? key}) : super(key: key);
 
   @override
+  _MapScreenState createState() => _MapScreenState();
+}
+
+class _MapScreenState extends State<MapScreen> {
+  late GoogleMapController mapController;
+
+  final LatLng _initialPosition = const LatLng(49.6346, 8.3450);
+
+  @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Map Screen',
-        style: TextStyle(fontSize: 20, color: primaryGreen),
+    return Scaffold(
+      body: GoogleMap(
+        initialCameraPosition: CameraPosition(
+          target: _initialPosition,
+          zoom: 12.0,
+        ),
+        onMapCreated: (controller) {
+          setState(() {
+            mapController = controller;
+          });
+        },
       ),
     );
   }
