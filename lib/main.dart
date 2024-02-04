@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'color_palette.dart';
-import 'widgets/feed_screen.dart';
-import 'widgets/map_screen.dart';
+import 'screens/feed_screen.dart';
+import 'screens/map_screen.dart';
 import 'bloc/feed_bloc.dart';
 import 'bloc/map_bloc.dart';
+import 'package:runrally/repository/run_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -71,9 +72,11 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget _getScreen(int index) {
+    RunRepository runRepository = RunRepository();
+
     switch (index) {
       case 0:
-        return const FeedScreen();
+        return FeedScreen(runRepository: runRepository,);
       case 1:
         return const MapScreen();
       default:
